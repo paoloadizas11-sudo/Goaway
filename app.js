@@ -6,7 +6,7 @@
 'use strict';
 
 // ─── CONFIG ─────────────────────────────────
-const TMDB_KEY = '0b1f4b7a6e9d4ffecc9d4738bd20bc16';
+const TMDB_KEY = 'ec59dd30c754edd220d8f1c0be992100';
 const TMDB_BASE = 'https://api.themoviedb.org/3';
 const IMG_BASE = 'https://image.tmdb.org/t/p';
 const SOURCES = {
