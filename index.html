@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>MovieNova — Watch Free Movies, Anime & Cartoons</title>
+<meta name="description" content="Stream movies, anime and cartoons for free. No ads. Full HD."/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- NAVBAR / SIDEBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="showHome()" aria-label="MovieNova home">
+      <span class="logo-icon" aria-hidden="true"><span></span></span>
+      <span class="logo-text">Movie<span class="logo-accent">Nova</span></span>
+    </a>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#" class="nav-link active" onclick="showHome();setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5v9a1.5 1.5 0 0 1-1.5 1.5h-5v-6h-5v6h-5A1.5 1.5 0 0 1 3 19.5z"/></svg><span>Home</span>
+      </a>
+      <a href="#" class="nav-link" onclick="filterByCategory('movie');setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 4 3 4m4-4 3 4M7 20l3-4m4 4 3-4"/></svg><span>Movies</span>
+      </a>
+      <a href="#" class="nav-link" onclick="filterByCategory('tv');setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="m8 3 4 3 4-3M8 19v2m8-2v2"/></svg><span>TV Shows</span>
+      </a>
+      <a href="#" class="nav-link" onclick="filterByCategory('anime');setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg><span>Anime</span>
+      </a>
+      <a href="#" class="nav-link" onclick="filterByCategory('cartoon');setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/><path d="M8 15c2 2 6 2 8 0"/></svg><span>Cartoons</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">LIBRARY</div>
+      <a href="#" class="nav-link" onclick="showWatchlist();setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5A2.5 2.5 0 0 1 8.5 2h10A1.5 1.5 0 0 1 20 3.5V20l-6-3-6 3V6.5A2.5 2.5 0 0 1 10.5 4H18"/></svg><span>My List</span>
+      </a>
+      <a href="#" class="nav-link" onclick="showContinueWatching();setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Continue Watching</span>
+      </a>
+      <a href="#" class="nav-link" onclick="showHistory();setActive(this)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 5v5h5M12 8v4l3 2"/></svg><span>Watch History</span>
+      </a>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-label">GENRES</div>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('28');setActive(this)"><span>Action</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('35');setActive(this)"><span>Comedy</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('18');setActive(this)"><span>Drama</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('27');setActive(this)"><span>Horror</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('10749');setActive(this)"><span>Romance</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('878');setActive(this)"><span>Sci-Fi</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('14');setActive(this)"><span>Fantasy</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('53');setActive(this)"><span>Thriller</span></a>
+      <a href="#" class="nav-link genre-link" onclick="setGenreAndHome('16');setActive(this)"><span>Animation</span></a>
+    </div>
+
+    <div class="sidebar-account">
+      <div class="account-mark">M</div>
+      <div class="account-copy"><strong>Welcome to MovieNova</strong><span>Save favorites and get personalized picks.</span></div>
+      <button onclick="toggleUserMenu()">Sign In</button>
+    </div>
+
+    <div class="nav-right">
+      <button class="icon-btn" id="searchToggle" onclick="toggleSearch()" title="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="icon-btn notif-btn" onclick="toggleNotifications()" title="Notifications"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-badge" id="notifBadge">3</span></button>
+      <button class="user-btn" onclick="toggleUserMenu()"><div class="avatar">J</div></button>
+    </div>
+    <button class="hamburger" onclick="toggleMobileNav()" id="hamburger"><span></span><span></span><span></span></button>
+  </div>
+
+  <div class="search-bar" id="searchBar">
+    <div class="search-inner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="Search movies, series, actors..." oninput="handleSearch(this.value)" onkeydown="if(event.key==='Escape')toggleSearch()"/>
+      <button onclick="toggleSearch()" class="search-close" aria-label="Close search">×</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</nav>
+
+<!-- NOTIFICATIONS PANEL -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-header"><h3>Notifications</h3><button onclick="clearNotifs()">Clear all</button></div>
+  <div class="notif-list" id="notifList"></div>
+</div>
+
+<!-- USER MENU -->
+<div class="user-menu" id="userMenu">
+  <div class="user-info">
+    <div class="avatar-lg">J</div>
+    <div><div class="user-name">Jack</div><div class="user-email">jack@movienova.tv</div></div>
+  </div>
+  <hr/>
+  <a href="#" onclick="showWatchlist();toggleUserMenu()">❤️ My Watchlist</a>
+  <a href="#" onclick="showHistory();toggleUserMenu()">📌 Watch History</a>
+  <a href="#" onclick="showContinueWatching();toggleUserMenu()">▶️ Continue Watching</a>
+  <hr/>
+  <a href="#" onclick="toggleTheme();toggleUserMenu()">🌙 Toggle Theme</a>
+  <a href="#" onclick="toggleUserMenu()">⚙️ Settings</a>
+</div>
+
+<!-- MAIN CONTENT -->
+<main id="mainContent">
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="heroSection">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content" id="heroContent">
+      <div class="hero-badge">🔥 Trending Now</div>
+      <h1 class="hero-title" id="heroTitle">Loading...</h1>
+      <p class="hero-desc" id="heroDesc"></p>
+      <div class="hero-meta" id="heroMeta"></div>
+      <div class="hero-actions">
+        <button class="btn-play" onclick="playHeroMovie()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          Watch Now
+        </button>
+        <button class="btn-info" onclick="showHeroInfo()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          More Info
+        </button>
+        <button class="btn-list" id="heroListBtn" onclick="toggleHeroWatchlist()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="hero-thumbs" id="heroThumbs"></div>
+  </section>
+
+  <!-- FILTERS BAR -->
+  <div class="filters-bar" id="filtersBar">
+    <div class="filters-inner">
+      <div class="filter-group">
+        <label>Genre</label>
+        <select id="genreFilter" onchange="applyFilters()">
+          <option value="">All Genres</option>
+          <option value="28">Action</option>
+          <option value="35">Comedy</option>
+          <option value="27">Horror</option>
+          <option value="10749">Romance</option>
+          <option value="878">Sci-Fi</option>
+          <option value="53">Thriller</option>
+          <option value="16">Animation</option>
+          <option value="12">Adventure</option>
+          <option value="14">Fantasy</option>
+          <option value="18">Drama</option>
+          <option value="80">Crime</option>
+          <option value="10751">Family</option>
+          <option value="36">History</option>
+          <option value="10402">Music</option>
+          <option value="9648">Mystery</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Year</label>
+        <select id="yearFilter" onchange="applyFilters()">
+          <option value="">All Years</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+          <option value="2015">2010–2015</option>
+          <option value="2000">2000s</option>
+          <option value="1990">90s</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Language</label>
+        <select id="langFilter" onchange="applyFilters()">
+          <option value="">All Languages</option>
+          <option value="en">English</option>
+          <option value="ja">Japanese</option>
+          <option value="ko">Korean</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="zh">Chinese</option>
+          <option value="hi">Hindi</option>
+          <option value="pt">Portuguese</option>
+          <option value="it">Italian</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Sort By</label>
+        <select id="sortFilter" onchange="applyFilters()">
+          <option value="popularity.desc">Most Popular</option>
+          <option value="vote_average.desc">Top Rated</option>
+          <option value="release_date.desc">Newest First</option>
+          <option value="revenue.desc">Box Office</option>
+        </select>
+      </div>
+      <button class="btn-random-filter" onclick="randomMovie()">
+        Random Movie
+      </button>
+    </div>
+  </div>
+
+  <!-- ROWS -->
+  <div class="rows-container" id="rowsContainer">
+    <div class="row-section" id="continueSection" style="display:none">
+      <div class="row-header"><h2>Continue Watching</h2></div>
+      <div class="row-scroll" id="continueRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Trending Movies</h2><a href="#" onclick="loadMoreTrending()">See All</a></div>
+      <div class="row-scroll" id="trendingRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Popular This Week</h2><a href="#" onclick="filterByCategory('top_rated')">See All</a></div>
+      <div class="row-scroll" id="topRatedRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Anime</h2><a href="#" onclick="filterByCategory('anime')">See All</a></div>
+      <div class="row-scroll" id="animeRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Cartoons & Animation</h2><a href="#" onclick="filterByCategory('cartoon')">See All</a></div>
+      <div class="row-scroll" id="cartoonRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Popular TV Shows</h2><a href="#" onclick="filterByCategory('tv')">See All</a></div>
+      <div class="row-scroll" id="tvRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Recently Added</h2></div>
+      <div class="row-scroll" id="recentRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Action & Adventure</h2></div>
+      <div class="row-scroll" id="actionRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Comedy</h2></div>
+      <div class="row-scroll" id="comedyRow"></div>
+    </div>
+    <div class="row-section">
+      <div class="row-header"><h2>Sci-Fi & Fantasy</h2></div>
+      <div class="row-scroll" id="scifiRow"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- MOVIE DETAIL MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="movieModal">
+    <button class="modal-close" onclick="closeMovieModal()">✕</button>
+    <div class="modal-hero" id="modalHero">
+      <div class="modal-hero-bg" id="modalHeroBg"></div>
+      <div class="modal-hero-overlay"></div>
+      <div class="modal-hero-content">
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="modal-actions">
+          <button class="btn-play" onclick="openPlayer()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            Play
+          </button>
+          <button class="btn-trailer" id="trailerBtn" onclick="openTrailer()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+            Trailer
+          </button>
+          <button class="btn-watchlist" id="modalWatchlistBtn" onclick="toggleModalWatchlist()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="watchlistIcon"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <button class="btn-share" onclick="shareMovie()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-left">
+        <div class="modal-meta" id="modalMeta"></div>
+        <p class="modal-overview" id="modalOverview"></p>
+        <div class="modal-cast" id="modalCast"></div>
+        <div class="modal-similar" id="modalSimilar"></div>
+      </div>
+      <div class="modal-right">
+        <div class="modal-poster-wrap">
+          <img class="modal-poster" id="modalPoster" src="" alt=""/>
+          <div class="modal-rating" id="modalRating"></div>
+        </div>
+        <div class="modal-info-list" id="modalInfoList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VIDEO PLAYER MODAL -->
+<div class="player-overlay" id="playerOverlay">
+  <div class="player-container" id="playerContainer">
+    <div class="player-topbar">
+      <div class="player-title" id="playerTitle"></div>
+      <div class="player-top-actions">
+        <button class="player-icon-btn" onclick="toggleSubs()" id="subsBtn" title="Subtitles">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h4M15 15h2M7 11h2M13 11h4"/></svg>
+        </button>
+        <button class="player-icon-btn" onclick="togglePiP()" title="Picture in Picture">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="14" y="11" width="8" height="6" rx="1"/></svg>
+        </button>
+        <button class="player-icon-btn" onclick="closePlayer()">✕</button>
+      </div>
+    </div>
+    <div class="player-screen" id="playerScreen">
+      <iframe id="playerIframe" src="" allowfullscreen allow="autoplay; fullscreen; picture-in-picture" frameborder="0"></iframe>
+      <div class="player-loading" id="playerLoading">
+        <div class="spinner"></div>
+        <p>Loading stream...</p>
+      </div>
+    </div>
+    <div class="player-controls-bar">
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar" onclick="seekVideo(event)">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+          <div class="progress-thumb" id="progressThumb" style="left:0%"></div>
+        </div>
+        <div class="time-display"><span id="currentTime">0:00</span> / <span id="totalTime">0:00</span></div>
+      </div>
+      <div class="controls-row">
+        <div class="controls-left">
+          <button class="player-icon-btn" onclick="skipBack()" title="Back 10s">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 .49-4.56"/><text x="8" y="14" font-size="5" fill="currentColor" stroke="none">10</text></svg>
+          </button>
+          <button class="player-icon-btn play-pause" id="playPauseBtn" onclick="togglePlayPause()">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="playIcon"><polygon points="5,3 19,12 5,21"/></svg>
+          </button>
+          <button class="player-icon-btn" onclick="skipForward()" title="Forward 10s">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-.49-4.56"/><text x="8" y="14" font-size="5" fill="currentColor" stroke="none">10</text></svg>
+          </button>
+          <div class="volume-wrap" title="Adjust player volume">
+            <button class="player-icon-btn" onclick="toggleMute()" id="muteBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="volIcon"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            </button>
+            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100" oninput="setVolume(this.value)" aria-label="Volume"/>
+          </div><button class="player-icon-btn boost-btn" onclick="toggleBoost()" title="Volume boost">BOOST <span id="boostValue">100%</span></button>
+        </div>
+        <div class="controls-center">
+          <div class="speed-wrap">
+            <button class="player-icon-btn" onclick="toggleSpeedMenu()">
+              <span id="speedLabel">1×</span>
+            </button>
+            <div class="speed-menu" id="speedMenu">
+              <button onclick="setSpeed(0.5)">0.5×</button>
+              <button onclick="setSpeed(0.75)">0.75×</button>
+              <button onclick="setSpeed(1)" class="active">1×</button>
+              <button onclick="setSpeed(1.25)">1.25×</button>
+              <button onclick="setSpeed(1.5)">1.5×</button>
+              <button onclick="setSpeed(2)">2×</button>
+            </div>
+          </div>
+        </div>
+        <div class="controls-right">
+          <div class="source-wrap">
+            <label style="color:#aaa;font-size:12px">Source:</label>
+            <select id="sourceSelect" onchange="changeSource(this.value)" class="source-select">
+              <option value="vidsrc">VidSrc</option>
+              <option value="2embed">2Embed</option>
+              <option value="superembed">SuperEmbed</option>
+              <option value="moviesapi">MoviesAPI</option>
+            </select>
+          </div>
+          <div class="sub-lang-wrap" id="subLangWrap" style="display:none">
+            <label style="color:#aaa;font-size:12px">Subs:</label>
+            <select id="subLang" class="source-select" onchange="changeSubLang(this.value)">
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+              <option value="ja">Japanese</option>
+              <option value="ko">Korean</option>
+              <option value="zh">Chinese</option>
+              <option value="pt">Portuguese</option>
+              <option value="ar">Arabic</option>
+              <option value="ru">Russian</option>
+              <option value="it">Italian</option>
+              <option value="hi">Hindi</option>
+            </select>
+          </div>
+          <button class="player-icon-btn" onclick="toggleFullscreen()" title="Fullscreen">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="fsIcon"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAILER MODAL -->
+<div class="trailer-overlay" id="trailerOverlay" onclick="closeTrailer(event)">
+  <div class="trailer-container">
+    <button class="modal-close" onclick="closeTrailerModal()">✕</button>
+    <iframe id="trailerFrame" src="" allowfullscreen frameborder="0"></iframe>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="logo-icon">▶</span>
+      <span class="logo-text">Movie<span class="logo-accent">Nova</span></span>
+    </div>
+    <p class="footer-tagline">Your universe of stories. No ads. No limits.</p>
+    <div class="footer-links">
+      <a href="#">About</a>
+      <a href="#">Help Center</a>
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Contact</a>
+    </div>
+    <p class="footer-note">© 2024 MovieNova · Powered by TMDB</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
